@@ -1,0 +1,23 @@
+services:
+  app:
+    image: node
+    depends_on:
+      - db
+    working_dir: /src
+    command: npm start
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/src
+  db:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+    pgdata:
+
