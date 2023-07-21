@@ -31,8 +31,8 @@ export const getAllUsersController = async (req:Request, res:Response) => {
              age: body.age, 
              gender: body.gender, 
              status: body.status, 
-             created: new Date().toISOString(),
-             updated: new Date().toISOString()
+            //  created: new Date().toISOString(),
+            //  updated: new Date().toISOString()
          });   
          await userRepository.save(data);
          res.send(`${body.name} created successfully`)
