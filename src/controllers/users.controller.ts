@@ -1,10 +1,6 @@
 import { Request, Response } from 'express';
-import { AppDataSource } from '../data-source.js';
+import { userRepository } from '../services/users.service.js';
 import { UserEntity } from '../users.entity.js';
-
-AppDataSource.initialize().then(() => { console.log('Connected to DataBase successfully') }).catch((error) => console.log(error))
-
-const userRepository = AppDataSource.getRepository(UserEntity);
 
 export const getAllUsersController = async (req:Request, res:Response) => {
     try {
@@ -62,8 +58,8 @@ export const updateUserController = async (req: Request,res: Response): Promise<
     user.age = body.age;
     user.gender = body.gender;
     user.status = body.status;
-    user.created = new Date().toISOString();
-    user.updated = new Date().toISOString();
+    // user.created = new Date().toISOString();
+    // user.updated = new Date().toISOString();
 
     await userRepository.save(user);
     res.json({ message: `${userId} user has been updated successfully.` });

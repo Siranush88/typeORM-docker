@@ -7,10 +7,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { AppDataSource } from '../data-source.js';
-import { UserEntity } from '../users.entity.js';
-AppDataSource.initialize().then(() => { console.log('Connected to DataBase successfully'); }).catch((error) => console.log(error));
-const userRepository = AppDataSource.getRepository(UserEntity);
+import { userRepository } from '../services/users.service.js';
+// import { AppDataSource } from '../data-source.js';
+// import { UserEntity } from '../users.entity.js';
+// AppDataSource.initialize().then(() => { console.log('Connected to DataBase successfully') }).catch((error) => console.log(error))
+// const userRepository = AppDataSource.getRepository(UserEntity);
 export const getAllUsersController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const allUsers = yield userRepository.find();
@@ -65,8 +66,8 @@ export const updateUserController = (req, res) => __awaiter(void 0, void 0, void
         user.age = body.age;
         user.gender = body.gender;
         user.status = body.status;
-        user.created = new Date().toISOString();
-        user.updated = new Date().toISOString();
+        // user.created = new Date().toISOString();
+        // user.updated = new Date().toISOString();
         yield userRepository.save(user);
         res.json({ message: `${userId} user has been updated successfully.` });
     }

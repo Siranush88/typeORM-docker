@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 export let UserEntity = class UserEntity {
 };
 __decorate([
@@ -31,11 +31,11 @@ __decorate([
     __metadata("design:type", Boolean)
 ], UserEntity.prototype, "status", void 0);
 __decorate([
-    Column(),
+    CreateDateColumn(),
     __metadata("design:type", Date)
 ], UserEntity.prototype, "created", void 0);
 __decorate([
-    Column(),
+    UpdateDateColumn(),
     __metadata("design:type", Date)
 ], UserEntity.prototype, "updated", void 0);
 UserEntity = __decorate([
