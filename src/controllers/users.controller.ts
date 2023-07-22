@@ -14,9 +14,11 @@ export const getAllUsersController = async (req:Request, res:Response) => {
   
   export const getUserController =  async (req:Request, res:Response) => {
     try {
-        const body = req.body;
-        const data = await userRepository.findOneBy({id: body.id});
-        res.send(data)
+        const userId: number = parseInt(req.params.id);     
+        const user: UserEntity | any = await userRepository.findOne({
+            where: { id: userId },
+        });
+        res.send(user)
     } catch(err) {
         console.error(err);
         res.status(500).json({ error: "User is not found." });
@@ -72,7 +74,6 @@ export const updateUserController = async (req: Request,res: Response): Promise<
   export const deleteUserController = async (req:Request, res:Response) => {
     try {
         const userId: number = parseInt(req.params.id);
-
         const user: UserEntity | null = await userRepository.findOne({
             where: { id: userId },
         });
@@ -80,9 +81,9 @@ export const updateUserController = async (req: Request,res: Response): Promise<
         if (!user) {
             return res.status(404).json({ error: "User is not found." });
         }
-        await userRepository.delete(user);
+        await userRepository.remove(user);
 
-        res.json({ message: `The user with ${userId} ID has been deleted successfully.` });
+        res.json({ message: `The user with ${userId}ID has been deleted successfully.` });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Failed to delete the user." });

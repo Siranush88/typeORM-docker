@@ -8,10 +8,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { userRepository } from '../services/users.service.js';
-// import { AppDataSource } from '../data-source.js';
-// import { UserEntity } from '../users.entity.js';
-// AppDataSource.initialize().then(() => { console.log('Connected to DataBase successfully') }).catch((error) => console.log(error))
-// const userRepository = AppDataSource.getRepository(UserEntity);
 export const getAllUsersController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const allUsers = yield userRepository.find();
@@ -24,9 +20,11 @@ export const getAllUsersController = (req, res) => __awaiter(void 0, void 0, voi
 });
 export const getUserController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const body = req.body;
-        const data = yield userRepository.findOneBy({ id: body.id });
-        res.send(data);
+        const userId = parseInt(req.params.id);
+        const user = yield userRepository.findOne({
+            where: { id: userId },
+        });
+        res.send(user);
     }
     catch (err) {
         console.error(err);
@@ -41,8 +39,8 @@ export const createNewUserController = (req, res) => __awaiter(void 0, void 0, v
             age: body.age,
             gender: body.gender,
             status: body.status,
-            created: new Date().toISOString(),
-            updated: new Date().toISOString()
+            //  created: new Date().toISOString(),
+            //  updated: new Date().toISOString()
         });
         yield userRepository.save(data);
         res.send(`${body.name} created successfully`);
@@ -85,7 +83,7 @@ export const deleteUserController = (req, res) => __awaiter(void 0, void 0, void
         if (!user) {
             return res.status(404).json({ error: "User is not found." });
         }
-        yield userRepository.delete(user);
+        yield userRepository.remove(user);
         res.json({ message: `The user with ${userId} ID has been deleted successfully.` });
     }
     catch (error) {
