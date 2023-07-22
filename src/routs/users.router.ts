@@ -1,5 +1,5 @@
 import express, { Router } from 'express';
-import { apiKeyValidator } from '../services/users.service.js';
+import { apiKeyValidator } from '../controllers/users.controller.js';
 import {getAllUsersController, getUserController, createNewUserController , updateUserController, deleteUserController} from '../controllers/users.controller.js';
 
 const usersRouter:Router = express.Router();
